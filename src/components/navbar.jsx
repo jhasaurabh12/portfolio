@@ -6,19 +6,20 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import Lottie from "lottie-react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
   { href: "/experience", label: "Experience" },
-  { href: "/projects", label: "Projects" },
   { href: "/publications", label: "Publications" },
   { href: "/skills", label: "Skills" },
+  { href: "/certifications", label: "Certifications" },
   { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { theme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [leetcodeAnimation, setLeetcodeAnimation] = useState(null);
   const [leetcodeDarkAnimation, setLeetcodeDarkAnimation] = useState(null);
@@ -26,41 +27,43 @@ export default function Navbar() {
   const [githubAnimation, setGithubAnimation] = useState(null);
   const [githubDarkAnimation, setGithubDarkAnimation] = useState(null);
   const [hoveredIcon, setHoveredIcon] = useState(null);
+  const [mounted, setMounted] = useState(false);
   const leetcodeRef = useRef(null);
   const codeforcesRef = useRef(null);
   const githubRef = useRef(null);
 
   useEffect(() => {
-    // Load LeetCode animations for both light and dark modes
-    fetch('/leetcode.json')
-      .then(response => response.json())
-      .then(data => setLeetcodeAnimation(data))
-      .catch(error => console.error('Error loading LeetCode animation:', error));
-
-    fetch('/leetcode-dark.json')
-      .then(response => response.json())
-      .then(data => setLeetcodeDarkAnimation(data))
-      .catch(error => console.error('Error loading LeetCode dark animation:', error));
-    
-    // Load Codeforces animation
-    fetch('/codeforces.json')
-      .then(response => response.json())
-      .then(data => setCodeforcesAnimation(data))
-      .catch(error => console.error('Error loading Codeforces animation:', error));
-
-    // Load GitHub animations for both light and dark modes
-    fetch('/github.json')
-      .then(response => response.json())
-      .then(data => setGithubAnimation(data))
-      .catch(error => console.error('Error loading GitHub animation:', error));
-
-    fetch('/github-dark.json')
-      .then(response => response.json())
-      .then(data => setGithubDarkAnimation(data))
-      .catch(error => console.error('Error loading GitHub dark animation:', error));
+    setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (!mounted) return;
+
+    const loadAnimations = async () => {
+      try {
+        const [leetcode, leetcodeDark, codeforces, github, githubDark] = await Promise.all([
+          fetch('/leetcode.json').then(res => res.json()),
+          fetch('/leetcode-dark.json').then(res => res.json()),
+          fetch('/codeforces.json').then(res => res.json()),
+          fetch('/github.json').then(res => res.json()),
+          fetch('/github-dark.json').then(res => res.json()),
+        ]);
+
+        setLeetcodeAnimation(leetcode);
+        setLeetcodeDarkAnimation(leetcodeDark);
+        setCodeforcesAnimation(codeforces);
+        setGithubAnimation(github);
+        setGithubDarkAnimation(githubDark);
+      } catch (error) {
+        console.error('Error loading animations:', error);
+      }
+    };
+
+    loadAnimations();
+  }, [mounted]);
+
   const handleMouseEnter = (icon, ref) => {
+    if (!mounted) return;
     setHoveredIcon(icon);
     if (ref.current) {
       ref.current.setDirection(1);
@@ -69,6 +72,7 @@ export default function Navbar() {
   };
 
   const handleMouseLeave = () => {
+    if (!mounted) return;
     setHoveredIcon(null);
   };
 
@@ -76,8 +80,23 @@ export default function Navbar() {
     window.open(url, '_blank');
   };
 
+  // Skip rendering animations until mounted
+  if (!mounted) {
+    return (
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-gray-100/95 dark:bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-gray-100/75">
+        <div className="container flex h-16 items-center">
+          <div className="mr-4 hidden md:flex">
+            <Link href="/" className="mr-6 flex items-center space-x-2">
+              <span className="text-xl font-bold">Saurabh Jha</span>
+            </Link>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-gray-100/95 dark:bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-gray-100/75 dark:supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-gray-100/95 dark:bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-gray-100/75">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
@@ -166,12 +185,12 @@ export default function Navbar() {
             onMouseEnter={() => handleMouseEnter('leetcode', leetcodeRef)}
             onMouseLeave={handleMouseLeave}
             className="inline-flex items-center justify-center w-[32px] h-[32px] rounded-md transition-colors mr-2"
-            title="Visit my LeetCode profile"
+            title="LeetCode Profile"
           >
             {hoveredIcon === 'leetcode' ? (
               <Lottie
                 lottieRef={leetcodeRef}
-                animationData={document.documentElement.classList.contains('dark') ? leetcodeDarkAnimation : leetcodeAnimation}
+                animationData={theme === 'dark' ? leetcodeDarkAnimation : leetcodeAnimation}
                 loop={false}
                 autoplay={true}
                 style={{ width: '100%', height: '100%' }}
@@ -232,7 +251,7 @@ export default function Navbar() {
             {hoveredIcon === 'github' ? (
               <Lottie
                 lottieRef={githubRef}
-                animationData={document.documentElement.classList.contains('dark') ? githubDarkAnimation : githubAnimation}
+                animationData={theme === 'dark' ? githubDarkAnimation : githubAnimation}
                 loop={false}
                 autoplay={true}
                 style={{ width: '100%', height: '100%' }}

@@ -13,13 +13,13 @@ export default function ExperiencePage() {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h2 className="text-2xl font-semibold">Standard Chartered Bank GBS</h2>
-                  <p className="text-gray-600 mt-1">Senior Software Engineer</p>
+                  <p className="text-gray-600 dark:text-gray-300 mt-1">Senior Software Engineer</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-gray-600">July 2021-Present</p>
+                  <p className="text-gray-600 dark:text-gray-300">July 2021-Present</p>
                 </div>
               </div>
-              <ul className="list-disc list-inside space-y-2 text-gray-600">
+              <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
                 <li>Promoted to Senior Software Engineer for leading the migration of SPM module to the open-source platform and delivering critical backend solutions under tight deadlines</li>
                 <li>Led the migration of Security Patch Management (SPM) module from PEGA(low code tool based on JAVA) to a new open-source tech stack (Quarkus, GraphQL, Lit Web Components), focusing on both backend and frontend redesign with performance improvements</li>
                 <li>Developed 30+ REST APIs using Jakarta REST standards in Quarkus and optimized data access through Hasura GraphQL; improved page load times by 3x for large-scale (TB) data tables</li>
@@ -30,7 +30,7 @@ export default function ExperiencePage() {
 
               <div className="mt-6">
                 <h3 className="text-xl font-semibold mb-3">Software Engineer</h3>
-                <ul className="list-disc list-inside space-y-2 text-gray-600">
+                <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
                   <li>Led development of resilient batch processing system for daily delta data synchronization with ServiceNow System using REST API, ensuring zero data loss across failures</li>
                   <li>Designed and implemented Superseded Workflow creating a Directed Acyclic Graph structure to automate patch updates across related cases which reduces user's effort in manually updating those patch information</li>
                   <li>Built End-to-End OLA Enhancements, expanding operational tracking across 6+ workflow stages, crucial for regulatory metrics</li>
