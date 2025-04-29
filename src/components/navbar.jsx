@@ -4,9 +4,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
-import Lottie from "lottie-react";
+import dynamic from 'next/dynamic';
 import Image from "next/image";
 import { useTheme } from "next-themes";
+
+// Dynamically import Lottie with no SSR
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 const links = [
   { href: "/", label: "Home" },
@@ -34,32 +37,31 @@ export default function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    
+    // Only fetch animations on client side
+    if (typeof window !== 'undefined') {
+      const loadAnimations = async () => {
+        try {
+          const [leetcode, leetcodeDark, codeforces, github, githubDark] = await Promise.all([
+            fetch('/leetcode.json').then(res => res.json()),
+            fetch('/leetcode-dark.json').then(res => res.json()),
+            fetch('/codeforces.json').then(res => res.json()),
+            fetch('/github.json').then(res => res.json()),
+            fetch('/github-dark.json').then(res => res.json()),
+          ]);
 
-  useEffect(() => {
-    if (!mounted) return;
+          setLeetcodeAnimation(leetcode);
+          setLeetcodeDarkAnimation(leetcodeDark);
+          setCodeforcesAnimation(codeforces);
+          setGithubAnimation(github);
+          setGithubDarkAnimation(githubDark);
+        } catch (error) {
+          console.error('Error loading animations:', error);
+        }
+      };
 
-    const loadAnimations = async () => {
-      try {
-        const [leetcode, leetcodeDark, codeforces, github, githubDark] = await Promise.all([
-          fetch('/leetcode.json').then(res => res.json()),
-          fetch('/leetcode-dark.json').then(res => res.json()),
-          fetch('/codeforces.json').then(res => res.json()),
-          fetch('/github.json').then(res => res.json()),
-          fetch('/github-dark.json').then(res => res.json()),
-        ]);
-
-        setLeetcodeAnimation(leetcode);
-        setLeetcodeDarkAnimation(leetcodeDark);
-        setCodeforcesAnimation(codeforces);
-        setGithubAnimation(github);
-        setGithubDarkAnimation(githubDark);
-      } catch (error) {
-        console.error('Error loading animations:', error);
-      }
-    };
-
-    loadAnimations();
+      loadAnimations();
+    }
   }, [mounted]);
 
   const handleMouseEnter = (icon, ref) => {
