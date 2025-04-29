@@ -20,7 +20,7 @@ export default function Home() {
             </div>
           </div>
           <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-300 dark:to-white">
-            Hi, I'm Saurabh!
+            Hi, I&apos;m Saurabh!
           </h1>
           <h2 className="font-display text-2xl md:text-3xl font-semibold mb-8 text-gray-700 dark:text-gray-200">
             Software Engineer
@@ -61,7 +61,7 @@ export default function Home() {
                 Experience
               </h3>
               <p className="text-gray-600 dark:text-gray-300 mb-6 line-clamp-2">
-                Check out my professional journey and the companies I've worked with.
+                Check out my professional journey and the companies I&apos;ve worked with.
               </p>
               <Link 
                 href="/experience" 

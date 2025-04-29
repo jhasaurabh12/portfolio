@@ -32,7 +32,7 @@ export default function ExperiencePage() {
                 <h3 className="text-xl font-semibold mb-3">Software Engineer</h3>
                 <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
                   <li>Led development of resilient batch processing system for daily delta data synchronization with ServiceNow System using REST API, ensuring zero data loss across failures</li>
-                  <li>Designed and implemented Superseded Workflow creating a Directed Acyclic Graph structure to automate patch updates across related cases which reduces user's effort in manually updating those patch information</li>
+                  <li>Designed and implemented Superseded Workflow creating a Directed Acyclic Graph structure to automate patch updates across related cases which reduces user&apos;s effort in manually updating those patch information</li>
                   <li>Built End-to-End OLA Enhancements, expanding operational tracking across 6+ workflow stages, crucial for regulatory metrics</li>
                   <li>Collaborated across cross-functional teams to deliver backend enhancements for 15+ BAU releases and 6+ major releases, consistently meeting strict SLAs and audit commitments</li>
                   <li>In the initial training period, developed a prototype of full-stack Payment Initiation application supporting corporate banking operations using ReactJS, Spring Boot, PostgreSQL, REST APIs; designed backend architecture and database schema</li>
