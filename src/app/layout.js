@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
@@ -12,7 +13,7 @@ const montserrat = Montserrat({
 
 export const metadata = {
   title: 'Saurabh Jha',
-  description: 'Personal portfolio website showcasing my work and experience',
+  description: 'Personal website showcasing my work and experience',
   icons: {
     icon: [
       {
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
