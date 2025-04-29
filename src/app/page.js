@@ -26,12 +26,11 @@ export default function Home() {
             Software Engineer
           </h2>
           <p className=" font-display text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Graduate Student in Computer Science with professional full-stack development experience,
-            specializing in modern web technologies and cloud platforms.
+            Senior Software Engineer with expertise in microservices architecture and full-stack development. Specialized in building high-performance enterprise applications using modern tech stack including Quarkus, Lit and cloud technologies.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:space-x-4">
             <Link 
-              href="#" 
+              href="https://raw.githubusercontent.com/jhasaurabh12/resume/main/Saurabh_Jha-CV.pdf" 
               className="relative inline-flex items-center justify-center px-8 py-4 bg-gray-800 text-white rounded-xl 
               transition-all duration-200 shadow-md hover:shadow-xl dark:bg-gray-700
               transform hover:-translate-y-1 overflow-hidden before:absolute before:inset-0 

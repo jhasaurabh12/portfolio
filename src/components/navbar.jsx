@@ -198,7 +198,7 @@ export default function Navbar() {
             ) : (
               <>
                 <Image
-                  src="/leetcode.svg"
+                  src="/leetcode-3.svg"
                   alt="LeetCode"
                   width={24}
                   height={24}
