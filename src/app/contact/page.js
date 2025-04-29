@@ -1,39 +1,44 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import Lottie from "lottie-react";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import dynamic from 'next/dynamic';
+
+// Dynamically import Lottie with no SSR
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 export default function ContactPage() {
   const [linkedinAnimation, setLinkedinAnimation] = useState(null);
   const [twitterAnimation, setTwitterAnimation] = useState(null);
   const [gmailAnimation, setGmailAnimation] = useState(null);
   const [hoveredIcon, setHoveredIcon] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
   
   const linkedinRef = useRef(null);
   const twitterRef = useRef(null);
   const gmailRef = useRef(null);
   
   useEffect(() => {
-    // Fetch all JSON files when component mounts
-    fetch('/linkedin.json')
-      .then(response => response.json())
-      .then(data => setLinkedinAnimation(data))
-      .catch(error => console.error('Error loading LinkedIn animation:', error));
+    setIsMounted(true);
+    // Only fetch animations on the client side
+    if (typeof window !== 'undefined') {
+      // Fetch all JSON files when component mounts
+      fetch('/linkedin.json')
+        .then(response => response.json())
+        .then(data => setLinkedinAnimation(data))
+        .catch(error => console.error('Error loading LinkedIn animation:', error));
 
-    fetch('/twitter.json')
-      .then(response => response.json())
-      .then(data => setTwitterAnimation(data))
-      .catch(error => console.error('Error loading Twitter animation:', error));
+      fetch('/twitter.json')
+        .then(response => response.json())
+        .then(data => setTwitterAnimation(data))
+        .catch(error => console.error('Error loading Twitter animation:', error));
 
-    fetch('/gmail.json')
-      .then(response => response.json())
-      .then(data => setGmailAnimation(data))
-      .catch(error => console.error('Error loading Gmail animation:', error));
+      fetch('/gmail.json')
+        .then(response => response.json())
+        .then(data => setGmailAnimation(data))
+        .catch(error => console.error('Error loading Gmail animation:', error));
+    }
   }, []);
 
   const handleMouseEnter = (icon, ref) => {
@@ -51,6 +56,11 @@ export default function ContactPage() {
   const handleClick = (url) => {
     window.open(url, '_blank');
   };
+
+  // Don't render anything until client-side hydration is complete
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="container mx-auto px-4 py-20">
@@ -78,7 +88,7 @@ export default function ContactPage() {
                         onMouseLeave={handleMouseLeave}
                         className="inline-flex items-center justify-center w-[48px] h-[48px] rounded-md transition-colors duration-200"
                       >
-                        {hoveredIcon === 'linkedin' ? (
+                        {hoveredIcon === 'linkedin' && linkedinAnimation ? (
                           <Lottie
                             lottieRef={linkedinRef}
                             animationData={linkedinAnimation}
@@ -102,7 +112,7 @@ export default function ContactPage() {
                         onMouseLeave={handleMouseLeave}
                         className="inline-flex items-center justify-center w-[48px] h-[48px] rounded-md transition-colors duration-200"
                       >
-                        {hoveredIcon === 'twitter' ? (
+                        {hoveredIcon === 'twitter' && twitterAnimation ? (
                           <Lottie
                             lottieRef={twitterRef}
                             animationData={twitterAnimation}
@@ -126,7 +136,7 @@ export default function ContactPage() {
                         onMouseLeave={handleMouseLeave}
                         className="inline-flex items-center justify-center w-[48px] h-[48px] rounded-md transition-colors duration-200"
                       >
-                        {hoveredIcon === 'gmail' ? (
+                        {hoveredIcon === 'gmail' && gmailAnimation ? (
                           <Lottie
                             lottieRef={gmailRef}
                             animationData={gmailAnimation}
