@@ -29,8 +29,10 @@ export default function Home() {
             Senior Software Engineer with expertise in microservices architecture and full-stack development. Specialized in building high-performance enterprise applications using modern tech stack including Quarkus, Lit and cloud technologies.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:space-x-4">
-            <Link 
-              href="https://raw.githubusercontent.com/jhasaurabh12/resume/main/Saurabh_Jha-CV.pdf" 
+            <a 
+              href="https://drive.google.com/file/d/1lQksYoLJF-ueB1LF6hDds1InV6mcdNU1/view?usp=share_link" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative inline-flex items-center justify-center px-8 py-4 bg-gray-800 text-white rounded-xl 
               transition-all duration-200 shadow-md hover:shadow-xl dark:bg-gray-700
               transform hover:-translate-y-1 overflow-hidden before:absolute before:inset-0 
@@ -38,7 +40,7 @@ export default function Home() {
               before:opacity-0 hover:before:opacity-100 before:transition-opacity isolate"
             >
               <span className="relative z-10">View Resume</span>
-            </Link>
+            </a>
             <Link 
               href="/contact" 
               className="px-8 py-4 border-2 border-gray-700 text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-200 dark:border-gray-400 dark:text-gray-400 dark:hover:bg-gray-800/50 transform hover:-translate-y-0.5"
